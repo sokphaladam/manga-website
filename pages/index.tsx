@@ -1,49 +1,41 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { URLSearchParams } from "url";
-import { CardManage } from "../src/components/CardManga";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { VARIABLE } from "../src/lib/variable";
+import { HomeScreen } from "../src/screens/HomeScreen";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = ({ data }: any) => {
+const Home: NextPage = (props: any) => {
+  const router = useRouter();
+  const [searchInput, setSearchInput] = useState(
+    router.query.s ? router.query.s : ""
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search title..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.keyCode === 13) {
+              router.query.s = searchInput;
+              router.push({
+                pathname: router.pathname,
+                query: router.query,
+              });
+              setSearchInput("");
+            }
           }}
-        >
-          {(data.data as any[]).map((x) => {
-            const cover_key = x.relationships.find(
-              (f: any) => f.type === "cover_art"
-            ).id;
-            return (
-              <CardManage
-                mangaId={x.id}
-                coverId={cover_key}
-                key={x.id}
-                title={x.attributes.title.en}
-              />
-            );
-          })}
-        </div>
+        />
+        <br />
+        <HomeScreen {...props} />
       </div>
     </div>
   );
-};
-
-Home.getInitialProps = async () => {
-  const res = await fetch(
-    `${VARIABLE.URL}manga?limit=25&offset=0&order[latestUploadedChapter]=desc`
-  );
-  const data = await res.json();
-
-  return { data };
 };
 
 export default Home;

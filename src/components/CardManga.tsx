@@ -4,33 +4,15 @@ import { VARIABLE } from "../lib/variable";
 import Pic from "../../public/me.jpg";
 import Link from "next/link";
 
-async function query(coverId: string) {
-  const res = await fetch(`${VARIABLE.URL}cover/${coverId}`);
-  const data = await res.json();
-
-  return data.data.attributes.fileName;
-}
-
 export function CardManage({
   mangaId,
-  coverId,
+  filename,
   title,
 }: {
   mangaId: string;
-  coverId: string;
+  filename: string;
   title: string;
 }) {
-  const [filename, setFilename] = useState("");
-
-  async function getData() {
-    const x = await query(coverId);
-    setFilename(x);
-  }
-
-  useEffect(() => {
-    getData();
-  });
-
   return (
     <Link href={`/manga/${mangaId}`}>
       <a>
