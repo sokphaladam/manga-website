@@ -1,5 +1,6 @@
 .container {
   padding: 0 2rem;
+  background-color: #262626;
 }
 
 .main {
@@ -10,6 +11,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80%;
+  margin: auto auto;
 }
 
 .footer {
