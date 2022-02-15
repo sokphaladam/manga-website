@@ -5,6 +5,7 @@ import { VARIABLE } from "../../src/lib/variable";
 import { useState } from "react";
 import Image from "next/image";
 import Pic from "../../public/me.jpg";
+import { SlideShow } from "../../src/components/SlideShow";
 
 const Chapter: NextPage = ({ data }: any) => {
   const [index, setIndex] = useState(0);
@@ -14,42 +15,38 @@ const Chapter: NextPage = ({ data }: any) => {
   );
 
   process.browser &&
-    window.document.addEventListener("keydown", function (e) {
-      switch (e.keyCode) {
-        case 37:
-          if (index === 0) return;
-          setIndex(index - 1);
-          break;
-        case 39:
-          if (index === data.chapter.dataSaver.length - 1) return;
-          setIndex(index + 1);
-          break;
-      }
-    });
-
-  process.browser &&
     window.addEventListener("resize", function () {
       setHeight(this.window.innerHeight);
     });
 
-  return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      {process.browser && (
-        <Image
-          src={Pic}
-          alt=""
-          loader={() =>
-            `${data.baseUrl}/data-saver/${data.chapter.hash}/${data.chapter.dataSaver[index]}`
-          }
-          height={height}
-          loading="lazy"
-          objectFit="contain"
-          objectPosition="auto 100%"
-          placeholder="blur"
-        />
+  return process.browser ? (
+    <SlideShow
+      images={data.chapter.dataSaver.map(
+        (x: any) => `${data.baseUrl}/data-saver/${data.chapter.hash}/${x}`
       )}
-    </div>
+    />
+  ) : (
+    <></>
   );
+
+  // return (
+  //   <div style={{ display: "flex", justifyContent: "center" }}>
+  //     {process.browser && (
+  //       <Image
+  //         src={Pic}
+  //         alt=""
+  //         loader={() =>
+  //           `${data.baseUrl}/data-saver/${data.chapter.hash}/${data.chapter.dataSaver[index]}`
+  //         }
+  //         height={height}
+  //         loading="lazy"
+  //         objectFit="contain"
+  //         objectPosition="auto 100%"
+  //         placeholder="blur"
+  //       />
+  //     )}
+  //   </div>
+  // );
 };
 
 Chapter.getInitialProps = async (ctx) => {
