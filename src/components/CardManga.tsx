@@ -31,7 +31,7 @@ export function CardManage({
             src={Pic}
             alt=""
             loader={() => {
-              return `${VARIABLE.STATIC}covers/${mangaId}/${filename}`;
+              return filename;
             }}
             width={200}
             height={300}
