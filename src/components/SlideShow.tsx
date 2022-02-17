@@ -50,7 +50,7 @@ export function SlideShow({ images }: Props) {
   };
 
   return (
-    <div style={{ margin: "auto", width: "100%" }}>
+    <div style={{ margin: "auto" }}>
       <Slide
         {...properties}
         autoplay={false}
@@ -58,75 +58,22 @@ export function SlideShow({ images }: Props) {
         onChange={(e: any) => setIndex(e + 1)}
         easing="ease"
       >
-        {images.map((image, index) => {
+        {images.map((image, i) => {
           return (
-            <div key={index} className="each-slide">
-              <Image
-                src={Pic}
-                alt=""
-                loader={() => image}
-                height={height}
-                loading="lazy"
-                objectFit="contain"
-                objectPosition="auto 100%"
-                placeholder="blur"
-              />
-            </div>
+            <Image
+              src={Pic}
+              alt=""
+              loader={() => image}
+              height={height}
+              loading="lazy"
+              objectFit="contain"
+              objectPosition="auto 100%"
+              placeholder="blur"
+              key={i}
+            />
           );
         })}
       </Slide>
     </div>
   );
-
-  /*
-  return (
-    <div style={{ display: "flex", justifyContent: "center", height: height }}>
-      <span className="text-light">
-        {index + 1} / {images.length}
-      </span>
-      <button
-        onClick={() => {
-          setIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 1));
-        }}
-      >
-        {"<"}
-      </button>
-      <div className="slideshow" style={{ height: height }}>
-        <div
-          className="slideshowSlider"
-          style={{
-            transform: `translate3d(${-index * 100}%, 0, 0)`,
-            height: height,
-          }}
-        >
-          {images.map((image, index) => {
-            return (
-              <Image
-                src={Pic}
-                alt=""
-                loader={() => image}
-                height={height}
-                loading="lazy"
-                objectFit="contain"
-                objectPosition="auto 100%"
-                placeholder="blur"
-                key={index}
-                className="slide"
-              />
-            );
-          })}
-        </div>
-      </div>
-      <button
-        onClick={() => {
-          setIndex((prevIndex) =>
-            prevIndex === images.length - 1 ? prevIndex : prevIndex + 1
-          );
-        }}
-      >
-        {">"}
-      </button>
-    </div>
-  );
-  */
 }
