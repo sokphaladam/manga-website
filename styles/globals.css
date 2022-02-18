@@ -1,4 +1,5 @@
 @import url("./fontawesome/css/all.css");
+@import url("./flag-icons/css/flag-icons.css");
 html,
 body {
   padding: 0;
@@ -55,4 +56,16 @@ a {
 
 .slideshowDot.active {
   background-color: #6a0dad;
+}
+
+.table-manga tr td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.table-hover tbody tr:hover {
+  transform: scale(1.1) !important;
 }

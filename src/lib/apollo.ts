@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 function createIsomorphLink() {
-  const uri = process.env.ENDPOINTGRAPH || "http://localhost:8080/";
+  const uri = "http://graph.bakemono.club/";
   const { HttpLink } = require("@apollo/client/link/http");
   return new HttpLink({
     uri,
